@@ -1,3 +1,5 @@
+from html import escape
+
 import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
@@ -228,11 +230,11 @@ def modulo_kanban():
             for pedido in st.session_state['kanban'][coluna]:
                 st.markdown(f"""
                     <div class='card-kanban'>
-                        <strong>{pedido['Pedido']}</strong><br>
-                        {pedido['Cliente']}<<br>
-                        <small>{pedido['Descrição']}</small><br>
+                        <strong>{escape(str(pedido['Pedido']))}</strong><br>
+                        {escape(str(pedido['Cliente']))}<<br>
+                        <small>{escape(str(pedido['Descrição']))}</small><br>
                         <strong>{formatar_moeda(pedido['Valor'])}</strong><br>
-                        <small>PRAZO: {pedido['Prazo']}</small>
+                        <small>PRAZO: {escape(str(pedido['Prazo']))}</small>
                     </div>
                 """, unsafe_allow_html=True)
     
@@ -450,7 +452,7 @@ def modulo_ecommerce():
     if st.session_state['log_sincronizacao']:
         st.markdown("### LOG DE SINCRONIZAÇÃO")
         for msg in st.session_state['log_sincronizacao']:
-            st.markdown(f"<<div class='log-sucesso'>{msg}</div>", unsafe_allow_html=True)
+            st.markdown(f"<<div class='log-sucesso'>{escape(str(msg))}</div>", unsafe_allow_html=True)
     
     # HISTÓRICO DE PEDIDOS ECOMMERCE
     if st.session_state['ecommerce']['pedidos_recebidos']:
@@ -489,9 +491,9 @@ def modulo_documentos():
     if pedido_info:
         st.markdown(f"""
             <div class='destaque-painel'>
-                <p><strong>PEDIDO:</strong> {pedido_info['Pedido']}</p>
-                <p><strong>CLIENTE:</strong> {pedido_info['Cliente']}</p>
-                <p><strong>DESCRIÇÃO:</strong> {pedido_info['Descrição']}</p>
+                <p><strong>PEDIDO:</strong> {escape(str(pedido_info['Pedido']))}</p>
+                <p><strong>CLIENTE:</strong> {escape(str(pedido_info['Cliente']))}</p>
+                <p><strong>DESCRIÇÃO:</strong> {escape(str(pedido_info['Descrição']))}</p>
                 <p><strong>VALOR:</strong> {formatar_moeda(pedido_info['Valor'])}</p>
             </div>
         """, unsafe_allow_html=True)
